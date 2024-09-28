@@ -1,0 +1,1 @@
+For NASD only. A custom solution that connects to TigerID SSO + Powerschool SIS through selenium to scrape grades. Contiguity[.co] is then used to send SMS updates for any grade additions/updates.
