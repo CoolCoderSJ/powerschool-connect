@@ -80,6 +80,7 @@ def getGrades(url):
             except: total = -1
 
             assignment['name'] = cells[2].text
+            assignment['date'] = cells[0].text
             assignment['score'] = given
             assignment['total'] = total
             assignment['id'] = row.get_attribute('id')
@@ -142,18 +143,21 @@ for row in rows:
             doc = db.get_document("grades", class_['uuid'], assignment['id'])
             if doc['score'] != assignment['score']:
                 cg.send.text({
-                    "to": os.environ['PHONE_NUM'], 
-                    "message": f"Updated assignment in {class_['name']}: {assignment['name']}.\nScore: {assignment['score']}/{assignment['total']}\nClass Grade: {percentTotal}%"
+                    "to": os.environ['PHONE_NUM'],
+                    "message": f"Updated assignment in {class_['name']}: {assignment['name']}.\nDate: {assignment['date']}\nScore: {assignment['score']}/{assignment['total']}\nClass Grade: {percentTotal}%"
                 })
             if doc['total'] != assignment['total']:
                 cg.send.text({
-                    "to": os.environ['PHONE_NUM'], 
-                    "message": f"Updated assignment in {class_['name']}: {assignment['name']}.\nScore: {assignment['score']}/{assignment['total']}\nClass Grade: {percentTotal}%"
+                    "to": os.environ['PHONE_NUM'],
+                    "message": f"Updated assignment in {class_['name']}: {assignment['name']}.\nDate: {assignment['date']}\nScore: {assignment['score']}/{assignment['total']}\nClass Grade: {percentTotal}%"
                 })
             db.update_document("grades", class_['uuid'], assignment['id'], assignment)
        except:
             db.create_document("grades", class_['uuid'], assignment['id'], assignment)
             cg.send.text({
-                "to": os.environ['PHONE_NUM'], 
-                "message": f"New assignment in {class_['name']}: {assignment['name']}.\nScore: {assignment['score']}/{assignment['total']}\nClass Grade: {percentTotal}%"
+                "to": os.environ['PHONE_NUM'],
+                "message": f"New assignment in {class_['name']}: {assignment['name']}.\nDate: {assignment['date']}\nScore: {assignment['score']}/{assignment['total']}\nClass Grade: {percentTotal}%"
             })
+
+
+driver.quit()

@@ -11,11 +11,12 @@ import os
 
 def get_cookie():
     service = Service(executable_path='/home/shuchir/powerschool-connect/geckodriver')
-
     options = FirefoxOptions()
+    options.binary_location = "/usr/bin/firefox"
     options.add_argument("--headless")
+    print("INITIALIZING...")
     driver = webdriver.Firefox(options=options, service=service)
-    print("DRIVER DEFINED") 
+    print("DRIVER DEFINED")
 
     driver.set_window_size(1024, 768)
     driver.get(f"https://{os.environ['HOST']}/student/idp?_userTypeHint=student")
